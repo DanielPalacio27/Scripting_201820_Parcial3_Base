@@ -5,6 +5,7 @@ public class FleeFromTagged : Task
 {
     public override bool Execute()
     {
+        ControlledAI.MoveAI();
         return base.Execute();
     }
 }

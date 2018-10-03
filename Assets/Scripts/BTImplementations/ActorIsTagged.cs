@@ -5,6 +5,8 @@ public class ActorIsTagged : Selector
 {
     protected override bool CheckCondition()
     {
-        return base.CheckCondition();
+        ControlledAI.Agent.speed = 10;
+        bool isTagged = ControlledAI.IsTagged;
+        return isTagged;
     }
 }

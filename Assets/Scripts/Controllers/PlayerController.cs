@@ -31,6 +31,5 @@ public class PlayerController : ActorController
             MoveActor();
         }
 
-        //print(string.Format("{0},{1},{2}", Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
     }
 }

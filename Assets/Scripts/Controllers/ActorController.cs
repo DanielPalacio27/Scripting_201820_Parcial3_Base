@@ -18,14 +18,43 @@ public abstract class ActorController : MonoBehaviour
 
     public OnActorTagged onActorTagged;
 
+
+    [SerializeField] private int taggedCount;
+    //public int TaggedCount { get; set; }
+
     public bool IsTagged { get; protected set; }
+
+    public NavMeshAgent Agent
+    {
+        get
+        {
+            return agent;
+        }
+
+        set
+        {
+            agent = value;
+        }
+    }
+
+    public int TaggedCount
+    {
+        get
+        {
+            return taggedCount;
+        }
+
+        set
+        {
+            taggedCount = value;
+        }
+    }
 
     // Use this for initialization
     protected virtual void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        Agent = GetComponent<NavMeshAgent>();
         renderer = GetComponent<MeshRenderer>();
-
         SetTagged(false);
 
         onActorTagged += SetTagged;
@@ -35,7 +64,7 @@ public abstract class ActorController : MonoBehaviour
 
     protected void MoveActor()
     {
-        agent.SetDestination(GetTargetLocation());
+        Agent.SetDestination(GetTargetLocation());
     }
 
     protected void OnCollisionEnter(Collision collision)
@@ -44,16 +73,26 @@ public abstract class ActorController : MonoBehaviour
 
         if (otherActor != null)
         {
-            print("collided!");
-
-            otherActor.onActorTagged(true);
-            onActorTagged(false);
+            if (otherActor.IsTagged)
+            {
+                TaggedCount++;
+                otherActor.onActorTagged(false);
+                GameController.Instance.PreviousTagged = otherActor;
+                Invoke("DelayToTagged", 0.1f);
+                GameController.Instance.currentTagged = this;
+                UIManager.Instance.UpdateUI();
+            }
         }
+    }
+
+    public void DelayToTagged()
+    {
+        onActorTagged(true);
     }
 
     protected virtual void OnDestroy()
     {
-        agent = null;
+        Agent = null;
         renderer = null;
         onActorTagged -= SetTagged;
     }
@@ -64,7 +103,7 @@ public abstract class ActorController : MonoBehaviour
 
         if (renderer)
         {
-            print(string.Format("Changing color to {0}", gameObject.name));
+            //print(string.Format("Changing color to {0}", gameObject.name));
             renderer.material.color = val ? taggedColor : baseColor;
         }
     }

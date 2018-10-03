@@ -7,6 +7,7 @@ public class Root : Node
 
     public override bool Execute()
     {
+        print("Ejecutado");
         return child.Execute();
     }
 

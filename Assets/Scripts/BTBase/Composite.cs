@@ -16,8 +16,8 @@ public abstract class Composite : Node
         {
             result = result && node.Execute();
 
-            print(string.Format("Executed sequence child {0} with result {1}", childCount, result));
-
+            //print(string.Format("Executed sequence child {0} with result {1}", childCount, result));
+            childCount++;
             if (ShouldBreak(result))
             {
                 break;

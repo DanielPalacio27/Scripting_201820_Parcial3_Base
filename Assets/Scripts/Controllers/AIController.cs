@@ -14,6 +14,8 @@ public class AIController : ActorController
         MoveActor();
     }
 
+    [SerializeField] float elapsedTime;
+
     protected override void Start()
     {
         base.Start();
@@ -24,6 +26,12 @@ public class AIController : ActorController
         }
 
         AIMoveTest.Instance.onAIMoveIssued += MoveAI;
+        InvokeRepeating("Execute", 1f, elapsedTime);
+    }
+
+    public void Execute()
+    {
+        btRootNode.Execute();
     }
 
     protected override void OnDestroy()
