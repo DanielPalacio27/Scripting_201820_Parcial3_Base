@@ -1,0 +1,10 @@
+Feedback
+
+Examen (5.0/5.0)
+ * Por qué el player se mueve como amagando cuando uno no le da instrucciones de moverse?
+ * Bien por el display de puntajes en el UI.
+
+Bonificación (0.0/0.5)
+Compensación : 1.0
+
+Total: 5.0 / 1.0
